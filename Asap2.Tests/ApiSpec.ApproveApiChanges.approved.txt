@@ -1269,6 +1269,7 @@ namespace Asap2
         public Parser(string fileName, Asap2.IErrorReporter errorHandler) { }
         public string fileName { get; }
         public string indentType { get; set; }
+        public char[] SpecialIdentCharacters { get; set; }
         public Asap2.Asap2File DoParse() { }
         public Asap2.Asap2File DoParse(System.IO.Stream stream) { }
         public bool Serialise(Asap2.Asap2File tree, System.IO.StreamWriter stream) { }

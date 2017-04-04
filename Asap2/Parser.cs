@@ -46,6 +46,15 @@ namespace Asap2
         public string indentType { get; set; }
 
         /// <summary>
+        /// Set additional characters outside of the ASAP2 standard to accept.
+        /// According to the ASAP2 standard, only letters, digits, underscores, 
+        /// dots, and square brackets or normally permitted.
+        /// Do not add any white-space characters.
+        /// </summary>
+        public char[] SpecialIdentCharacters { get; set; }
+
+
+        /// <summary>
         /// Parse the provided A2L file.
         /// </summary>
         /// <returns>true if all succeded with no fatal errors</returns>
@@ -56,7 +65,10 @@ namespace Asap2
             Asap2Parser parser;
             using (var stream = new FileStream(fileName, FileMode.Open))
             {
-                scanner = new Asap2Scanner(stream, this.errorHandler);
+                scanner = new Asap2Scanner(stream, this.errorHandler)
+                {
+                    SpecialIdentCharacters = this.SpecialIdentCharacters
+                };
                 parser = new Asap2Parser(scanner, this.errorHandler);
                 try
                 {
@@ -89,7 +101,10 @@ namespace Asap2
             bool status = false;
             Asap2Scanner scanner;
             Asap2Parser parser;
-            scanner = new Asap2Scanner(stream, this.errorHandler);
+            scanner = new Asap2Scanner(stream, this.errorHandler)
+            {
+                SpecialIdentCharacters = this.SpecialIdentCharacters
+            };
             parser = new Asap2Parser(scanner, this.errorHandler);
             try
             {
