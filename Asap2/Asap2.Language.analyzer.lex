@@ -10,7 +10,7 @@
 %}
 
 
-Identifier              [A-Za-z_][A-Za-z0-9_\.\[\]]*
+Identifier              [A-Za-z_][^ \t\u000c\r\n]*
 Space                   [ \t\u000c]
 Decimal                 [\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?
 HexNumber               0x[0-9A-Fa-f]+
@@ -178,7 +178,7 @@ A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new St
 
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }
-{Identifier}                    { return Make(Token.IDENTIFIER); }
+{Identifier}                    { ValidateIdentifierChars(); return Make(Token.IDENTIFIER); }
 {HexNumber}                     { return MakeHexNumber(); }
 {Decimal}                       { return MakeNumber(); }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Asap2
 {
@@ -19,6 +21,27 @@ namespace Asap2
 
         private readonly IErrorReporter errorHandler;
         private readonly Stack<Stream> streamStack = new Stack<Stream>();
+
+        private Regex identificationRegex = new Regex(@"[A-Za-z_][A-Za-z0-9_\.\[\]]*", RegexOptions.Compiled);
+        private char[] specialIdentCharacters = {};
+
+        /// <summary>
+        /// Set additional characters outside of the ASAP2 standard to accept.
+        /// According to the ASAP2 standard, only letters, digits, underscores, 
+        /// dots, and square brackets or normally permitted.
+        /// Do not add any white-space characters.
+        /// </summary>
+        public char[] SpecialIdentCharacters
+        {
+            get { return specialIdentCharacters; }
+            set
+            {
+                value = value ?? new char[] {};
+                specialIdentCharacters = value;
+                identificationRegex = new Regex(
+                    @"[A-Za-z_][A-Za-z0-9_\.\[\]" + string.Concat(value.Select(x => x == '-' ? @"\-" : Regex.Escape(x.ToString()))) + "]*");
+            }
+        }
 
         public Asap2Scanner(Stream file, IErrorReporter errorHandler) : this(file)
         {
@@ -73,6 +96,14 @@ namespace Asap2
             yylval.s = yytext;
             yylloc = new Location(yyline, yycol, yyline, yycol + yyleng, this.buffer.FileName);
             return (int)token;
+        }
+
+        public void ValidateIdentifierChars()
+        {
+            if (identificationRegex.Match(yytext).Value != yytext)
+            {
+                throw new ParserErrorException("{0} : Line: {1} : Row: {2} : Syntax error, Invalid characters in Identifier: '{3}'", this.buffer.FileName, yyline, yycol, yytext);
+            }
         }
 
         private void TryInclude(string fName)
