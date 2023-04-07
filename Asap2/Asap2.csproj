@@ -16,6 +16,8 @@
     <PackageReadmeFile>docs\README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/kallemooo/Asap2.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <NoWarn>CS1591</NoWarn>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="YaccLexTools" Version="1.0.0" />
