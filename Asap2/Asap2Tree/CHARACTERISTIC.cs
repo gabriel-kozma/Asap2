@@ -192,5 +192,84 @@ namespace Asap2
                 }
             }
         }
+
+        public override string ToString()
+        {
+            /*
+            public string Name { get; private set; }
+            public string LongIdentifier { get; private set; }
+            public Type type { get; private set; }
+            public UInt64 Address { get; private set; }
+            public string Deposit { get; private set; }
+            public decimal MaxDiff { get; private set; }
+
+            public string Conversion { get; private set; }
+            public decimal LowerLimit { get; private set; }
+            public decimal UpperLimit { get; private set; }
+
+            annotation
+            axis_descr
+            bit_mask;
+            byte_order;
+            calibration_access;
+            comparison_quantity;
+            dependent_characteristic;
+            discrete;
+            display_identifier;
+            ecu_address_extension;
+            extended_limits;
+            format;
+            function_list;
+            guard_rails;
+            map_list;
+            matrix_dim;
+            max_refresh;
+            number;
+            phys_unit;
+            read_only;
+            ref_memory_segment;
+            step_size;
+            symbol_link;
+            virtual_characteristic;
+            if_data
+             */
+
+            return $"\n\n=== CHARACTERISTIC " +
+                    $"\nName {Name}" +
+                    $"\nAddress 0x{Address.ToString("X8")}" +
+                    $"\nLongIdentifier {LongIdentifier}" +
+                    $"\ntype {type}" +
+                    $"\nDeposit {Deposit}" +
+                    $"\nMaxDiff {MaxDiff}" +
+                    $"\nConversion {Conversion}" +
+                    $"\nLowerLimit {LowerLimit}" +
+                    $"\nUpperLimit {UpperLimit}" +
+                    $"\nannotation {annotation}" +
+                    $"\naxis_descr {axis_descr}" +
+                    $"\nbit_mask {bit_mask}" +
+                    $"\nbyte_order {byte_order}" +
+                    $"\ncalibration_access {calibration_access}" +
+                    $"\ncomparison_quantity {comparison_quantity}" +
+                    $"\ndependent_characteristic {dependent_characteristic}" +
+                    $"\ndiscrete {discrete}" +
+                    $"\ndisplay_identifier {display_identifier}" +
+                    $"\necu_address_extension {ecu_address_extension}" +
+                    $"\nextended_limits {extended_limits}" +
+                    $"\nformat {format}" +
+                    $"\nfunction_list {function_list}" +
+                    $"\nguard_rails {guard_rails}" +
+                    $"\nmap_list {map_list}" +
+                    $"\nmatrix_dim {matrix_dim}" +
+                    $"\nmax_refresh {max_refresh}" +
+                    $"\nnumber {number}" +
+                    $"\nphys_unit {phys_unit}" +
+                    $"\nread_only {read_only}" +
+                    $"\nref_memory_segment {ref_memory_segment}" +
+                    $"\nstep_size {step_size}" +
+                    $"\nsymbol_link {symbol_link}" +
+                    $"\nvirtual_characteristic {virtual_characteristic}" +
+                    $"\nif_data {if_data}" +
+                    $"\n===";
+        }
     }
 }

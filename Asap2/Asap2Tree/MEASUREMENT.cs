@@ -155,5 +155,41 @@ namespace Asap2
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return $"\n\n=== MEASUREMENT" +
+                    $"\nName {Name}" +
+                    $"\nAddress 0x{GetEcuAddress().ToString("X8")}" +
+                    $"\nLongIdentifier {LongIdentifier}" +
+                    $"\nDatatype {Datatype}" +
+                    $"\nConversion {Conversion}" +
+                    $"\nResolution {Resolution}" +
+                    $"\nAccuracy {Accuracy}" +
+                    $"\nLowerLimit {LowerLimit}" +
+                    $"\nUpperLimit {UpperLimit}" +
+                    $"\nannotation {annotation}" +
+                    $"\narray_size {array_size}" +
+                    $"\nbit_mask {bit_mask}" +
+                    $"\nbit_operation {bit_operation}" +
+                    $"\nbyte_order {byte_order}" +
+                    $"\ndiscrete {discrete}" +
+                    $"\ndisplay_identifier {display_identifier}" +
+                    $"\necu_address {ecu_address}" +
+                    $"\necu_address_extension {ecu_address_extension}" +
+                    $"\nerror_mask {error_mask}" +
+                    $"\format  {format}" +
+                    $"\nfunction_list {function_list}" +
+                    $"\nlayout {layout}" +
+                    $"\nmatrix_dim {matrix_dim}" +
+                    $"\nmax_refresh {max_refresh}" +
+                    $"\nphys_unit {phys_unit}" +
+                    $"\nread_write {read_write}" +
+                    $"\nref_memory_segment {ref_memory_segment}" +
+                    $"\nsymbol_link {symbol_link}" +
+                    $"\Virtual  {Virtual}" +
+                    $"\nif_data {if_data}" +
+                    $"\n===";
+        }
     }
 }

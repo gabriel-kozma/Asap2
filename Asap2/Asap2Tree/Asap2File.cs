@@ -874,6 +874,14 @@ namespace Asap2
         public string name { get; private set; }
         [Element(0, IsArgument = true)]
         public string data;
+
+        public override string ToString()
+        {
+            return $"===== IF_DATA " +
+                $"\nname {name}" +
+                $"\ndata {data}" +
+                "=====";
+        }
     }
 
     [Base()]
@@ -920,6 +928,12 @@ namespace Asap2
 
         [Element(0, IsArgument = true, IsList = true, Comment = " MeasuringChannels ")]
         public List<string> MeasuringChannel = new List<string>();
+
+        public override string ToString()
+        {
+
+            return base.ToString();
+        }
     }
 
 

@@ -183,5 +183,37 @@ namespace Asap2
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return $"\n\n=== AXIS_PTS " +
+                    $"\nName {Name}" +
+                    $"\nAddress 0x{Address.ToString("X8")}" +
+                    $"\nLongIdentifier {LongIdentifier}" +
+                    $"\nDeposit {Deposit}" +
+                    $"\nMaxDiff {MaxDiff}" +
+                    $"\nConversion {Conversion}" +
+                    $"\nConversion {MaxAxisPoints}" +
+                    $"\nLowerLimit {LowerLimit}" +
+                    $"\nUpperLimit {UpperLimit}" +
+                    $"\nannotation {annotation}" +
+                    $"\nbyte_order {byte_order}" +
+                    $"\ncalibration_access {calibration_access}" +
+                    $"\ndeposit {deposit}" +
+                    $"\ndisplay_identifier {display_identifier}" +
+                    $"\necu_address_extension {ecu_address_extension}" +
+                    $"\nextended_limits {extended_limits}" +
+                    $"\nformat {format}" +
+                    $"\nfunction_list {function_list}" +
+                    $"\nguard_rails {guard_rails}" +
+                    $"\nif_data {if_data}" +
+                    $"\nmonotony {monotony}" +
+                    $"\nphys_unit {phys_unit}" +
+                    $"\nread_only {read_only}" +
+                    $"\nref_memory_segment {ref_memory_segment}" +
+                    $"\nstep_size {step_size}" +
+                    $"\nsymbol_link {symbol_link}" +
+                    $"\n===";
+        }
     }
 }
