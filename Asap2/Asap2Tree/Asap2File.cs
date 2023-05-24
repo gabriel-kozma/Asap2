@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Asap2
@@ -27,7 +29,7 @@ namespace Asap2
             this.asap2_version = new ASAP2_VERSION(new Location(baseFilename), 1, 51);
         }
 
-        public ASAP2_VERSION asap2_version {private set; get; }
+        public ASAP2_VERSION asap2_version { private set; get; }
         public void AddAsap2_version(ASAP2_VERSION asap2_version)
         {
             var version = elements.FirstOrDefault(x => x.GetType() == typeof(ASAP2_VERSION)) as ASAP2_VERSION;
@@ -126,6 +128,16 @@ namespace Asap2
 
         [Element(1, IsArgument = true)]
         public UInt32 UpgradeNo;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nVersionNo {VersionNo}" +
+                $"\nUpgradeNo {UpgradeNo}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -142,6 +154,16 @@ namespace Asap2
 
         [Element(1, IsArgument = true)]
         public UInt32 UpgradeNo;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nVersionNo {VersionNo}" +
+                $"\nUpgradeNo {UpgradeNo}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -175,10 +197,22 @@ namespace Asap2
                 throw new ValidationErrorException("No MODULE found, must be atleast one");
             }
 
-            foreach ( MODULE mod in modules.Values)
+            foreach (MODULE mod in modules.Values)
             {
                 mod.Validate(errorReporter);
             }
+        }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nname {name}" +
+                $"\nLongIdentifier {LongIdentifier}" +
+                $"\nheader {header}" +
+                $"\nmodules {modules}" +
+                "\n======";
         }
 
     }
@@ -196,6 +230,17 @@ namespace Asap2
 
         [Element(2, IsArgument = true, Name = "PROJECT_NO")]
         public string project_no;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nlongIdentifier {longIdentifier}" +
+                $"\nversion {version}" +
+                $"\nproject_no {project_no}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -222,6 +267,17 @@ namespace Asap2
         public string name { get; private set; }
         [Element(1, IsArgument = true)]
         public uint value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\ntype {type}" +
+                $"\nname {name}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -324,6 +380,35 @@ namespace Asap2
         /// </summary>
         [Element(21, IsArgument = true, Name = "STEP_SIZE")]
         public decimal? step_size;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nattribute {attribute}" +
+                $"\nInputQuantity {InputQuantity}" +
+                $"\nConversion {Conversion}" +
+                $"\nMaxAxisPoints {MaxAxisPoints}" +
+                $"\nLowerLimit {LowerLimit}" +
+                $"\nUpperLimit {UpperLimit}" +
+                $"\nannotation {annotation}" +
+                $"\naxis_pts_ref {axis_pts_ref}" +
+                $"\nbyte_order {byte_order}" +
+                $"\ncurve_axis_ref {curve_axis_ref}" +
+                $"\ndeposit {deposit}" +
+                $"\nextended_limits {extended_limits}" +
+                $"\nfix_axis_par {fix_axis_par}" +
+                $"\nfix_axis_par_dist {fix_axis_par_dist}" +
+                $"\nfix_axis_par_list {fix_axis_par_list}" +
+                $"\nformat {format}" +
+                $"\nmax_grad {max_grad}" +
+                $"\nmonotony {monotony}" +
+                $"\nphys_unit {phys_unit}" +
+                $"\nread_only {read_only}" +
+                $"\nstep_size {step_size}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -351,6 +436,19 @@ namespace Asap2
         public IndexOrder indexIncr;
         [Element(4, IsArgument = true, Comment = " addrType  ")]
         public AddrType addrType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                $"\nindexIncr {indexIncr}" +
+                $"\naddrType {addrType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -381,6 +479,20 @@ namespace Asap2
         public IndexOrder indexIncr;
         [Element(5, IsArgument = true, Comment = " addrType            ")]
         public AddrType addrType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                $"\nMaxNoOfRescalePairs {MaxNoOfRescalePairs}" +
+                $"\nindexIncr {indexIncr}" +
+                $"\naddrType {addrType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -403,6 +515,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " dataType            ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -421,6 +544,16 @@ namespace Asap2
         public string Name { get; private set; }
         [Element(1, IsArgument = true, Comment = " NumberOfAxisPoints ")]
         public UInt64 NumberOfAxisPoints;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nNumberOfAxisPoints {NumberOfAxisPoints}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -439,6 +572,16 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " DataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -460,6 +603,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " dataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -481,6 +635,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " dataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -503,6 +668,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " dataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -521,6 +697,16 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " DataSize ")]
         public DataSize dataSize;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nPosition {Position}" +
+                $"\ndataSize {dataSize}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -542,6 +728,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " DataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -564,6 +761,17 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " DataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -585,12 +793,29 @@ namespace Asap2
         public UInt64 Position;
         [Element(2, IsArgument = true, Comment = " DataType ")]
         public DataType dataType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
     public class STATIC_RECORD_LAYOUT : Asap2Base
     {
         public STATIC_RECORD_LAYOUT(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return $"====== {nameof(type)}" + base.ToString();
+        }
     }
 
     [Base(IsSimple = true)]
@@ -608,6 +833,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public DEPOSIT_type value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -654,6 +888,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public MONOTONY_type value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
 
@@ -680,6 +923,17 @@ namespace Asap2
         /// </summary>
         [Element(0, IsArgument = true, Comment = " Number of axis points ")]
         public UInt64 NumberAPo;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nOffset {Offset}" +
+                $"\nShift {Shift}" +
+                $"\nNumberAPo {NumberAPo}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -705,6 +959,17 @@ namespace Asap2
         /// </summary>
         [Element(0, IsArgument = true, Comment = " Number of axis points ")]
         public UInt64 NumberAPo;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nOffset {Offset}" +
+                $"\nDistance {Distance}" +
+                $"\nNumberAPo {NumberAPo}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -716,6 +981,15 @@ namespace Asap2
         public FIX_AXIS_PAR_LIST(Location location) : base(location) { }
         [Element(0, IsArgument = true, IsList = true, Comment = " Sample point values ")]
         public List<decimal> AxisPts_Values = new List<decimal>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nAxisPts_Values {AxisPts_Values}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -748,6 +1022,18 @@ namespace Asap2
         public IndexMode indexMode;
         [Element(3, IsArgument = true)]
         public AddrType addrType;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nPosition {Position}" +
+                $"\ndataType {dataType}" +
+                $"\nindexMode {indexMode}" +
+                $"\naddrType {addrType}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -767,6 +1053,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public BYTE_ORDER_type value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -795,6 +1090,20 @@ namespace Asap2
 
         [Element(5, IsArgument = true, Name = "S_REC_LAYOUT")]
         public string s_rec_layout;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nComment {Comment}" +
+                $"\nalignments {alignments}" +
+                $"\nbyte_order {byte_order}" +
+                $"\ndata_size {data_size}" +
+                $"\ndeposit {deposit}" +
+                $"\ns_rec_layout {s_rec_layout}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -859,6 +1168,30 @@ namespace Asap2
         /// </summary>
         [Element(15)]
         public STATIC_RECORD_LAYOUT static_record_layout;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nalignments {alignments}" +
+                $"\naxis_pts_xyz45 {axis_pts_xyz45}" +
+                $"\naxis_rescale_xyz45 {axis_rescale_xyz45}" +
+                $"\ndist_op_xyz45 {dist_op_xyz45}" +
+                $"\nfix_no_axis_pts_xyz45 {fix_no_axis_pts_xyz45}" +
+                $"\nfnc_values {fnc_values}" +
+                $"\nidentification {identification}" +
+                $"\nno_axis_pts_xyz45 {no_axis_pts_xyz45}" +
+                $"\nno_rescale_xyz45 {no_rescale_xyz45}" +
+                $"\noffset_xyz45 {offset_xyz45}" +
+                $"\nreserved {reserved}" +
+                $"\nrip_addr_wxyz45 {rip_addr_wxyz45}" +
+                $"\nshift_op_xyz45 {shift_op_xyz45}" +
+                $"\nsrc_addr_xyz45 {src_addr_xyz45}" +
+                $"\nstatic_record_layout {static_record_layout}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -877,7 +1210,9 @@ namespace Asap2
 
         public override string ToString()
         {
-            return $"===== IF_DATA " +
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
                 $"\nname {name}" +
                 $"\ndata {data}" +
                 "=====";
@@ -893,6 +1228,15 @@ namespace Asap2
         }
         [Element(0, IsArgument = true)]
         public string data;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\ndata {data}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -907,6 +1251,16 @@ namespace Asap2
         public decimal LowerLimit;
         [Element(2, IsArgument = true, Comment = " UpperLimit     ")]
         public decimal UpperLimit;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nLowerLimit {LowerLimit}" +
+                $"\nUpperLimit {UpperLimit}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -919,6 +1273,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true, IsList = true, Comment = " List of functions. ")]
         public List<string> functions = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nfunctions {functions}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -931,8 +1294,11 @@ namespace Asap2
 
         public override string ToString()
         {
-
-            return base.ToString();
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nMeasuringChannel {MeasuringChannel}" +
+                "\n======";
         }
     }
 
@@ -950,6 +1316,16 @@ namespace Asap2
 
         [Element(1, IsArgument = true, Comment = " Offset     ")]
         public UInt64 Offset;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nSymbolName {SymbolName}" +
+                $"\nOffset {Offset}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -965,6 +1341,16 @@ namespace Asap2
 
         [Element(1, IsArgument = true, Comment = " Rate        ")]
         public UInt64 Rate;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nScalingUnit {ScalingUnit}" +
+                $"\nRate {Rate}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -977,6 +1363,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true, CodeAsHex = true)]
         public UInt64 value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -989,6 +1384,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true, CodeAsHex = true)]
         public UInt64 value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1001,6 +1405,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true, CodeAsHex = true)]
         public UInt64 Address;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nAddress {Address.ToString("X8")}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1014,6 +1427,17 @@ namespace Asap2
         public ANNOTATION_ORIGIN annotation_origin;
         [Element(2)]
         public ANNOTATION_TEXT annotation_text;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nannotation_label {annotation_label}" +
+                $"\nannotation_origin {annotation_origin}" +
+                $"\nannotation_text {annotation_text}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1026,6 +1450,15 @@ namespace Asap2
 
         [Element(0, IsString = true)]
         public string value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1038,6 +1471,15 @@ namespace Asap2
 
         [Element(0, IsString = true)]
         public string value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1047,6 +1489,15 @@ namespace Asap2
 
         [Element(0, IsString = true, IsList = true)]
         public List<string> data = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\ndata {data}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true, IsObsolete = "Obsolete keyword. Please use MATRIX_DIM instead.")]
@@ -1059,6 +1510,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public ulong value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1072,6 +1532,17 @@ namespace Asap2
         public LEFT_SHIFT left_shift;
         [Element(3)]
         public SIGN_EXTEND sign_extend;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nright_shift {right_shift}" +
+                $"\nleft_shift {left_shift}" +
+                $"\nsign_extend {sign_extend}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1084,6 +1555,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public ulong value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1096,12 +1576,27 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public ulong value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
     public class SIGN_EXTEND : Asap2Base
     {
         public SIGN_EXTEND(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return $"====== {nameof(type)}" + base.ToString();
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1121,6 +1616,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true)]
         public CALIBRATION_ACCESS_type value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1152,6 +1656,20 @@ namespace Asap2
 
         [Element(5, IsArgument = true)]
         public decimal f;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\na {a}" +
+                $"\nb {b}" +
+                $"\nc {c}" +
+                $"\nd {d}" +
+                $"\ne {e}" +
+                $"\nf {f}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1167,6 +1685,16 @@ namespace Asap2
 
         [Element(1, IsArgument = true)]
         public decimal b;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\na {a}" +
+                $"\nb {b}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1196,6 +1724,16 @@ namespace Asap2
         public void Validate(IErrorReporter errorReporter, MODULE module)
         {
         }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nformula {formula}" +
+                $"\nformula_inv {formula_inv}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1212,22 +1750,37 @@ namespace Asap2
         /// <summary>
         /// Set from parsed data. Only used to validate the parsed list of <see cref="COMPU_TAB_DATA"/>.
         /// </summary>
-        public uint parsedNumberValuePairs { get;  private set; }
+        public uint parsedNumberValuePairs { get; private set; }
 
         [Element(1, IsArgument = true, Comment = " Name             ")]
         public string Name { get; private set; }
-        [Element(2, IsString = true, Comment   = " LongIdentifier   ")]
+        [Element(2, IsString = true, Comment = " LongIdentifier   ")]
         public string LongIdentifier { get; private set; }
         [Element(3, IsArgument = true, Comment = " ConversionType   ")]
         public ConversionType conversionType { get; private set; }
         [Element(4, IsArgument = true, Comment = " NumberValuePairs ")]
         public uint NumberValuePairs { get { return (uint)data.Count; } }
-        [Element(5, IsList = true, Comment     = " ValuePairs       ")]
+        [Element(5, IsList = true, Comment = " ValuePairs       ")]
         public List<COMPU_TAB_DATA> data;
         [Element(6, IsString = true, Name = "DEFAULT_VALUE")]
         public string default_value;
         [Element(7, IsArgument = true, Name = "DEFAULT_VALUE_NUMERIC")]
         public decimal default_value_numeric;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nLongIdentifier {LongIdentifier}" +
+                $"\nconversionType {conversionType}" +
+                $"\nNumberValuePairs {NumberValuePairs}" +
+                $"\ndata {data}" +
+                $"\ndefault_value {default_value}" +
+                $"\ndefault_value_numeric {default_value_numeric}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1247,6 +1800,17 @@ namespace Asap2
 
         [Element(2, IsString = true)]
         public decimal OutVal;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nname {name}" +
+                $"\nInVal {InVal}" +
+                $"\nOutVal {OutVal}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1267,16 +1831,30 @@ namespace Asap2
 
         [Element(1, IsArgument = true, Comment = " Name             ")]
         public string Name { get; private set; }
-        [Element(2, IsString = true, Comment   = " LongIdentifier   ")]
+        [Element(2, IsString = true, Comment = " LongIdentifier   ")]
         public string LongIdentifier { get; private set; }
         [Element(3, IsArgument = true, Comment = " ConversionType   ")]
         public ConversionType conversionType { get; private set; }
         [Element(4, IsArgument = true, Comment = " NumberValuePairs ")]
         public uint NumberValuePairs { get { return (uint)data.Count; } }
-        [Element(5, IsList = true, Comment     = " ValuePairs       ")]
+        [Element(5, IsList = true, Comment = " ValuePairs       ")]
         public List<COMPU_VTAB_DATA> data;
         [Element(6, IsString = true, Name = "DEFAULT_VALUE")]
         public string default_value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nLongIdentifier {LongIdentifier}" +
+                $"\nconversionType {conversionType}" +
+                $"\nNumberValuePairs {NumberValuePairs}" +
+                $"\ndata {data}" +
+                $"\ndefault_value {default_value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1296,6 +1874,17 @@ namespace Asap2
 
         [Element(2, IsString = true)]
         public string OutVal;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nname {name}" +
+                $"\nInVal {InVal}" +
+                $"\nOutVal {OutVal}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1316,7 +1905,7 @@ namespace Asap2
 
         [Element(1, IsArgument = true, Comment = " Name               ")]
         public string Name { get; private set; }
-        [Element(2, IsString = true, Comment   = " LongIdentifier     ")]
+        [Element(2, IsString = true, Comment = " LongIdentifier     ")]
         public string LongIdentifier { get; private set; }
         [Element(3, IsArgument = true, Comment = " NumberValueTriples ")]
         public uint NumberValueTriples { get { return (uint)data.Count; } }
@@ -1324,6 +1913,19 @@ namespace Asap2
         public List<COMPU_VTAB_RANGE_DATA> data;
         [Element(5, IsString = true, Name = "DEFAULT_VALUE")]
         public string default_value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nLongIdentifier {LongIdentifier}" +
+                $"\nNumberValueTriples {NumberValueTriples}" +
+                $"\ndata {data}" +
+                $"\ndefault_value {default_value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1347,6 +1949,18 @@ namespace Asap2
 
         [Element(3, IsString = true)]
         public string value;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nname {name}" +
+                $"\nInValMin {InValMin}" +
+                $"\nInValMax {InValMax}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1365,6 +1979,17 @@ namespace Asap2
         public uint yDim;
         [Element(2, IsArgument = true)]
         public uint zDim;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nxDim {xDim}" +
+                $"\nyDim {yDim}" +
+                $"\nzDim {zDim}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1381,7 +2006,7 @@ namespace Asap2
             SERAM,
             VARIABLES,
         }
-        
+
         public enum MemoryType
         {
             EEPROM,
@@ -1450,9 +2075,30 @@ namespace Asap2
 
         [Element(11, IsArgument = true)]
         public long offset4;
-    
+
         [Element(12, IsList = true)]
         public List<IF_DATA> if_data = new List<IF_DATA>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nlongIdentifier {longIdentifier}" +
+                $"\nprgType {prgType}" +
+                $"\nmemoryType {memoryType}" +
+                $"\nattribute {attribute}" +
+                $"\naddress 0x{address.ToString("X8")}" +
+                $"\nsize {size}" +
+                $"\noffset0 {offset0}" +
+                $"\noffset1 {offset1}" +
+                $"\noffset2 {offset2}" +
+                $"\noffset3 {offset3}" +
+                $"\noffset4 {offset4}" +
+                $"\nif_data {if_data}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -1507,6 +2153,23 @@ namespace Asap2
 
         [Element(8, IsList = true)]
         public List<IF_DATA> if_data = new List<IF_DATA>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nprgType {prgType}" +
+                $"\naddress 0x{Address.ToString("X8")}" +
+                $"\nSize {Size}" +
+                $"\noffset0 {offset0}" +
+                $"\noffset1 {offset1}" +
+                $"\noffset2 {offset2}" +
+                $"\noffset3 {offset3}" +
+                $"\noffset4 {offset4}" +
+                $"\nif_data {if_data}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1518,7 +2181,7 @@ namespace Asap2
             this.Version = Version;
         }
 
-        [Element(0, IsString = true,   Comment = " Method  ")]
+        [Element(0, IsString = true, Comment = " Method  ")]
         public string Method;
 
         [Element(1, IsArgument = true, Comment = " Version ")]
@@ -1526,6 +2189,16 @@ namespace Asap2
 
         [Element(2)]
         public CALIBRATION_HANDLE calibration_handle;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nMethod {Method}" +
+                $"\nVersion {Version}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1540,6 +2213,16 @@ namespace Asap2
 
         [Element(1, IsString = true, Name = "CALIBRATION_HANDLE_TEXT")]
         public string text;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nHandles {Handles}" +
+                $"\ntext {text}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
@@ -1556,6 +2239,16 @@ namespace Asap2
 
         [Element(1, IsString = true)]
         public string value { get; private set; }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nname {name}" +
+                $"\nvalue {value}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1616,30 +2309,87 @@ namespace Asap2
 
         [Element(17, IsString = true, Name = "VERSION")]
         public string version;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\ncomment {comment}" +
+                $"\naddr_epk {addr_epk}" +
+                $"\ncalibration_method {calibration_method}" +
+                $"\ncpu_type {cpu_type}" +
+                $"\ncustomer {customer}" +
+                $"\ncustomer_no {customer_no}" +
+                $"\necu {ecu}" +
+                $"\necu_calibration_offset {ecu_calibration_offset}" +
+                $"\nepk {epk}" +
+                $"\nmemory_layout {memory_layout}" +
+                $"\nmemory_segment {memory_segment}" +
+                $"\nno_of_interfaces {no_of_interfaces}" +
+                $"\nphone_no {phone_no}" +
+                $"\nsupplier {supplier}" +
+                $"\nsystem_constants {system_constants}" +
+                $"\nuser {user}" +
+                $"\nversion {version}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
     public class DISCRETE : Asap2Base
     {
         public DISCRETE(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                base.ToString();
+        }
     }
 
     [Base(IsSimple = true)]
     public class READ_ONLY : Asap2Base
     {
         public READ_ONLY(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                base.ToString();
+        }
     }
 
     [Base(IsSimple = true)]
     public class READ_WRITE : Asap2Base
     {
         public READ_WRITE(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                base.ToString();
+        }
     }
 
     [Base(IsSimple = true)]
     public class GUARD_RAILS : Asap2Base
     {
         public GUARD_RAILS(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                base.ToString();
+        }
     }
 
     [Base()]
@@ -1652,7 +2402,7 @@ namespace Asap2
         }
         [Element(1, IsArgument = true, Comment = " GroupName           ")]
         public string Name { get; private set; }
-        [Element(2, IsString = true, Comment   = " GroupLongIdentifier ")]
+        [Element(2, IsString = true, Comment = " GroupLongIdentifier ")]
         public string GroupLongIdentifier { get; private set; }
         [Element(3, IsList = true)]
         public List<ANNOTATION> annotation = new List<ANNOTATION>();
@@ -1668,6 +2418,23 @@ namespace Asap2
         public ROOT root;
         [Element(9)]
         public SUB_GROUP sub_group;
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nName {Name}" +
+                $"\nGroupLongIdentifier {GroupLongIdentifier}" +
+                $"\nannotation {annotation}" +
+                $"\nfunction_list {function_list}" +
+                $"\nif_data {if_data}" +
+                $"\nref_characteristic {ref_characteristic}" +
+                $"\nref_measurement {ref_measurement}" +
+                $"\nroot {root}" +
+                $"\nsub_group {sub_group}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1677,6 +2444,15 @@ namespace Asap2
 
         [Element(0, IsArgument = true, IsList = true, Comment = " Measurement references ")]
         public List<string> reference = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nreference {reference}" +
+                "\n======";
+        }
     }
 
     [Base()]
@@ -1686,12 +2462,29 @@ namespace Asap2
 
         [Element(0, IsArgument = true, IsList = true, Comment = " Sub groups ")]
         public List<string> groups = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\ngroups {groups}" +
+                "\n======";
+        }
     }
 
     [Base(IsSimple = true)]
     public class ROOT : Asap2Base
     {
         public ROOT(Location location) : base(location) { }
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                base.ToString();
+        }
     }
 
     /// <summary>
@@ -1705,6 +2498,15 @@ namespace Asap2
         }
         [Element(1, IsArgument = true, IsList = true)]
         public List<string> MapList = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nMapList {MapList}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -1722,6 +2524,16 @@ namespace Asap2
         public string Formula;
         [Element(1, IsArgument = true, IsList = true)]
         public List<string> Characteristic = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nFormula {Formula}" +
+                $"\nCharacteristic {Characteristic}" +
+                "\n======";
+        }
     }
 
     /// <summary>
@@ -1740,5 +2552,15 @@ namespace Asap2
         public string Formula;
         [Element(1, IsArgument = true, IsList = true)]
         public List<string> Characteristic = new List<string>();
+
+        public override string ToString()
+        {
+            var type = this.GetType();
+            return
+                $"====== {nameof(type)}" +
+                $"\nFormula {Formula}" +
+                $"\nCharacteristic {Characteristic}" +
+                "\n======";
+        }
     }
 }

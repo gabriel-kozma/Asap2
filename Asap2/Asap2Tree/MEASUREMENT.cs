@@ -187,7 +187,7 @@ namespace Asap2
                     $"\nread_write {read_write}" +
                     $"\nref_memory_segment {ref_memory_segment}" +
                     $"\nsymbol_link {symbol_link}" +
-                    $"\Virtual  {Virtual}" +
+                    $"\nVirtual  {Virtual}" +
                     $"\nif_data {if_data}" +
                     $"\n===";
         }
